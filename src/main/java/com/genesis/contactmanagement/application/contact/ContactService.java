@@ -13,6 +13,7 @@ import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 
@@ -70,5 +71,10 @@ public class ContactService {
             log.error(e);
             throw new ApplicationDataAccessException();
         }
+    }
+
+    @Transactional
+    public List<ContactDto> getAllContacts() {
+        return contactRepository.findAll().stream().map(ContactDto::from).toList();
     }
 }
