@@ -45,4 +45,8 @@ public class Company {
     )
     @ToString.Exclude
     private List<Contact> contacts;
+
+    public void recruit(Contact contact) {
+        contacts.add(contact);
+    }
 }

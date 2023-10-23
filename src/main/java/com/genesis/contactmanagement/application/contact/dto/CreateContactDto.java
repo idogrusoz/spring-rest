@@ -6,16 +6,16 @@ import jakarta.validation.constraints.NotBlank;
 
 @ValidContact
 public record CreateContactDto(
-        @NotBlank(message = "First name is mandatory") String firstname,
-        @NotBlank(message = "Last name is mandatory") String lastname,
+        @NotBlank(message = "First name is mandatory") String firstName,
+        @NotBlank(message = "Last name is mandatory") String lastName,
         @NotBlank(message = "Address is mandatory") String address,
         String vatNumber,
         ContractType contractType) {
 
     public Contact toContact() {
         Contact contact = new Contact();
-        contact.setFirstName(firstname);
-        contact.setLastName(lastname);
+        contact.setFirstName(firstName);
+        contact.setLastName(lastName);
         contact.setAddress(address);
         contact.setVatNumber(vatNumber);
         contact.setContractType(contractType);
