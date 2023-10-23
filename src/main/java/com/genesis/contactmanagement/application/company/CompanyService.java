@@ -3,6 +3,7 @@ package com.genesis.contactmanagement.application.company;
 
 import com.genesis.contactmanagement.application.company.dto.CompanyDto;
 import com.genesis.contactmanagement.application.exceptions.ApplicationDataAccessException;
+import com.genesis.contactmanagement.application.exceptions.CompanyNotFoundException;
 import com.genesis.contactmanagement.application.exceptions.DuplicateVATException;
 import com.genesis.contactmanagement.domain.model.Company;
 import lombok.extern.jbosslog.JBossLog;
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.NoSuchElementException;
 
 import static com.genesis.contactmanagement.utils.Utilities.isDuplicateVatNumber;
 
@@ -33,6 +36,16 @@ public class CompanyService {
                 log.error(e);
                 throw new ApplicationDataAccessException();
             }
+        }
+    }
+
+    public CompanyDto findByVatNumber(String vatNumber) {
+        try {
+            Company company = companyRepository.findByVatNumber(vatNumber).orElseThrow();
+            return CompanyDto.from(company);
+        } catch (NoSuchElementException e) {
+            log.error(e);
+            throw new CompanyNotFoundException();
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.genesis.contactmanagement.infrastructure.exceptionhandlers;
 
+import com.genesis.contactmanagement.application.exceptions.CompanyNotFoundException;
 import com.genesis.contactmanagement.application.exceptions.ContactNotFoundException;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -18,5 +19,12 @@ public class EntityNotFoundExceptionHandler {
     @ExceptionHandler(ContactNotFoundException.class)
     public String contactNotFoundException() {
         return "No contact is found with the given credentials";
+    }
+
+    @ResponseStatus(NOT_FOUND)
+    @ResponseBody
+    @ExceptionHandler(CompanyNotFoundException.class)
+    public String companyNotFoundException() {
+        return "No company is found with the given credentials";
     }
 }
