@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ContentManagementApplication {
+public class ContactManagementApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ContentManagementApplication.class, args);
+		SpringApplication.run(ContactManagementApplication.class, args);
 	}
 
 }
