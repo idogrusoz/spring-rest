@@ -6,6 +6,7 @@ import com.genesis.contactmanagement.application.contact.dto.CreateContactDto;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -31,5 +32,10 @@ public class ContactController {
     @PutMapping("/{contactId}")
     ContactDto updateContact(@PathVariable(name = "contactId") UUID contactId, @Valid @RequestBody CreateContactDto contactDto) {
         return contactService.updateContact(contactId, contactDto);
+    }
+
+    @DeleteMapping("/{contactId}")
+    void deleteContact(@PathVariable(name = "contactId") UUID contactId) {
+        contactService.deleteContact(contactId);
     }
 }

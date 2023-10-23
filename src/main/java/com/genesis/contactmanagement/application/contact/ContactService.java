@@ -9,6 +9,7 @@ import com.genesis.contactmanagement.domain.model.Contact;
 import lombok.extern.jbosslog.JBossLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -54,6 +55,20 @@ public class ContactService {
         } catch (NoSuchElementException e) {
             log.error(e);
             throw new ContactNotFoundException();
+        }
+    }
+
+    @Transactional
+    public void deleteContact(UUID contactId) {
+        try {
+            Contact contact = contactRepository.findByContactId(contactId).orElseThrow();
+            contactRepository.delete(contact);
+        } catch (NoSuchElementException e) {
+            log.error(e);
+            throw new ContactNotFoundException();
+        } catch (IllegalArgumentException | OptimisticLockingFailureException e) {
+            log.error(e);
+            throw new ApplicationDataAccessException();
         }
     }
 }
