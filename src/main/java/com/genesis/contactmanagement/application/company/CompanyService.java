@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.NoSuchElementException;
 
 import static com.genesis.contactmanagement.utils.Utilities.isDuplicateVatNumber;
+import static org.springframework.beans.BeanUtils.copyProperties;
 
 @Component
 @JBossLog
@@ -46,6 +47,22 @@ public class CompanyService {
         } catch (NoSuchElementException e) {
             log.error(e);
             throw new CompanyNotFoundException();
+        }
+    }
+
+    @Transactional
+    public CompanyDto updateCompany(CompanyDto companyDto) {
+        try {
+            var company = companyRepository.findByVatNumber(companyDto.vatNumber()).orElseThrow();
+            copyProperties(companyDto, company);
+            Company updatedCompany = companyRepository.saveAndFlush(company);
+            return CompanyDto.from(updatedCompany);
+        } catch (NoSuchElementException e) {
+            log.error(e);
+            throw new CompanyNotFoundException();
+        } catch (DataAccessException e) {
+            log.error(e);
+            throw new ApplicationDataAccessException();
         }
     }
 }
