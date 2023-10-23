@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/companies")
 public class CompanyController {
@@ -32,5 +34,10 @@ public class CompanyController {
     @PutMapping("/{vatNumber}")
     CompanyDto updateCompany(@Valid @RequestBody CompanyDto companyDto) {
         return companyService.updateCompany(companyDto);
+    }
+
+    @GetMapping
+    List<CompanyDto> getAllCompanies() {
+        return companyService.getAllCompanies();
     }
 }

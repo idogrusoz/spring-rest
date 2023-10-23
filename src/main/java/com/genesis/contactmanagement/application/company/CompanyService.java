@@ -12,6 +12,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import static com.genesis.contactmanagement.utils.Utilities.isDuplicateVatNumber;
@@ -64,5 +65,11 @@ public class CompanyService {
             log.error(e);
             throw new ApplicationDataAccessException();
         }
+    }
+
+
+    @Transactional
+    public List<CompanyDto> getAllCompanies() {
+        return companyRepository.findAll().stream().map(CompanyDto::from).toList();
     }
 }
