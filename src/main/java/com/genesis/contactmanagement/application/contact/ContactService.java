@@ -1,10 +1,10 @@
-package com.genesis.contactmanagement.application.company;
+package com.genesis.contactmanagement.application.contact;
 
-
-import com.genesis.contactmanagement.application.company.dto.CompanyDto;
+import com.genesis.contactmanagement.application.contact.dto.ContactDto;
+import com.genesis.contactmanagement.application.contact.dto.CreateContactDto;
 import com.genesis.contactmanagement.application.exceptions.ApplicationDataAccessException;
 import com.genesis.contactmanagement.application.exceptions.DuplicateVATException;
-import com.genesis.contactmanagement.domain.model.Company;
+import com.genesis.contactmanagement.domain.model.Contact;
 import lombok.extern.jbosslog.JBossLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -15,17 +15,17 @@ import static com.genesis.contactmanagement.utils.Utilities.isDuplicateVatNumber
 
 @Component
 @JBossLog
-public class CompanyService {
+public class ContactService {
 
     @Autowired
-    CompanyRepository companyRepository;
+    ContactRepository contactRepository;
 
     @Transactional
-    public CompanyDto createCompany(CompanyDto companyDto) {
+    public ContactDto createContact(CreateContactDto contactDto) {
         try {
-            Company company = companyRepository.saveAndFlush(companyDto.toCompany());
-            return CompanyDto.from(company);
-        } catch (DataAccessException e) {
+            Contact contact = contactRepository.saveAndFlush(contactDto.toContact());
+            return ContactDto.from(contact);
+        }  catch (DataAccessException e) {
             if (isDuplicateVatNumber(e.getCause().getMessage())) {
                 log.error(e);
                 throw new DuplicateVATException();

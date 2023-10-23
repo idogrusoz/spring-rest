@@ -36,9 +36,9 @@ public class Contact {
     @Column(unique = true)
     private UUID contactId;
     @NonNull
-    private String firstname;
+    private String firstName;
     @NonNull
-    private String lastname;
+    private String lastName;
     @NonNull
     private String address;
 
