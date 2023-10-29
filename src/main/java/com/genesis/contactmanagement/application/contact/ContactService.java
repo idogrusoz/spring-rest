@@ -73,7 +73,6 @@ public class ContactService {
         }
     }
 
-    @Transactional
     public List<ContactDto> getAllContacts() {
         return contactRepository.findAll().stream().map(ContactDto::from).toList();
     }

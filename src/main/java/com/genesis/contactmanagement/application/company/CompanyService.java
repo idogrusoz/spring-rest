@@ -68,7 +68,6 @@ public class CompanyService {
     }
 
 
-    @Transactional
     public List<CompanyDto> getAllCompanies() {
         return companyRepository.findAll().stream().map(CompanyDto::from).toList();
     }
